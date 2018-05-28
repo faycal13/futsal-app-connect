@@ -12,7 +12,9 @@ export class AppComponent {
   searchTerm = '';
   isCollpased = true;
 
-constructor(private router: Router, private data: DataService){}
+constructor(private router: Router, private data: DataService){
+  this.data.getProfile();
+}
 
   get token() {
     return localStorage.getItem('token');

@@ -5,7 +5,7 @@ const User = require('../models/user');
 const config = require('../config');
 const checkJwt = require('../middleware/check-jwt');
 
-
+// * REGISTER * //
 router.post('/signup', (req, res, next) => {
   let user = new User();
   user.name = req.body.userName;
@@ -40,7 +40,7 @@ User.findOne({ email: req.body.email }, (err, existUser) => {
 });
 
 
-
+// * LOGIN * //
 router.post('/login', (req, res, next) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (err) {
@@ -77,8 +77,9 @@ router.post('/login', (req, res, next) => {
   });
 });
 
-
+// * UPDATE PROFILE * //
 router.route('/profile')
+// Get the user data
 .get(checkJwt, (req, res, next) => {
   User.findOne({ _id: req.decoded.user._id }, (err, user) => {
     res.json({
@@ -88,6 +89,7 @@ router.route('/profile')
     });
   });
 })
+// Update the user data
 .post(checkJwt, (req, res, next) => {
   User.findOne({ _id: req.decoded.user._id}, (err, user) => {
     if (err) {
@@ -106,6 +108,50 @@ router.route('/profile')
     res.json({
       success: true,
       message: 'Successfuly edited your profile'
+    });
+  });
+});
+
+// * UPDATE ADDRESS * //
+router.route('/address')
+
+.get(checkJwt, (req, res, next) => {
+  User.findOne({ _id: req.decoded.user._id }, (err, user) => {
+    res.json({
+      success: true,
+      address: user.address,
+      message: "Successful"
+    });
+  });
+})
+
+.post(checkJwt, (req, res, next) => {
+  User.findOne({ _id: req.decoded.user._id}, (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (req.body.addr1) {
+      user.address.addr1 = req.body.addr1;
+    }
+    if (req.body.addr2) {
+      user.address.addr2 = req.body.addr2;
+    }
+    if (req.body.city) {
+      user.address.city = req.body.city;
+    }
+    if (req.body.state) {
+      user.address.state = req.body.state;
+    }
+    if (req.body.country) {
+      user.address.country = req.body.state;
+    }
+    if (req.body.postalCode) {
+      user.address.postalCode = req.body.postalCode;
+    }
+    user.save();
+    res.json({
+      success: true,
+      message: 'Successfuly edited your address'
     });
   });
 });
