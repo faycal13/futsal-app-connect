@@ -21,6 +21,19 @@
         <br>
         <a routerLink="/profile/address" class="btn btn-warning">Change Shipping Address</a>
         <br>
+        <br>
+        <div *ngIf="data.user.haveEvent">
+          <p class="lead">Event Actions</p>
+          <hr>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <a routerLink="/profile/postevent" class="btn-btn-outline-success btn-block">Post Event For Player</a>
+            </div>
+            <div class="col-md-6">
+              <a routerLink="/profile/myevents" class="btn btn-outline-info btn-block">My Events</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

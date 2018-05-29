@@ -10,9 +10,10 @@ import {
 @Injectable()
 export class AuthguardService implements CanActivate {
 
-  constructor(private router: Router ) { }
+  constructor(private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    // If the user is login block acces login and register page else block acces profile page
     if (localStorage.getItem('token')) {
       return state.url.startsWith('/profile')
       ? true

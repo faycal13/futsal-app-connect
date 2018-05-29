@@ -16,6 +16,7 @@ const UserSchema = new Schema({
       country: String,
       postalCode: String
     },
+    haveEvent: { type: Boolean, default: false },
     picture: String,
     created: { type: Date, default: Date.now}
   });

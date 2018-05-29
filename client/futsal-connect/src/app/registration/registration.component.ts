@@ -14,6 +14,7 @@ export class RegistrationComponent implements OnInit {
   email = '';
   password = '';
   password1 = '';
+  haveEvent = false;
 
   btnDisabled = false;
 
@@ -56,7 +57,7 @@ export class RegistrationComponent implements OnInit {
             name: this.name,
             email: this.email,
             password: this.password,
-
+            haveEvent: this.haveEvent
           }
         );
         if (data['success']) {

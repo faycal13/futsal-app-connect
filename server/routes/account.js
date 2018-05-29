@@ -1,6 +1,6 @@
+// * IMPORT DEPENDENCIES * //
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
-
 const User = require('../models/user');
 const config = require('../config');
 const checkJwt = require('../middleware/check-jwt');
@@ -8,10 +8,11 @@ const checkJwt = require('../middleware/check-jwt');
 // * REGISTER * //
 router.post('/signup', (req, res, next) => {
   let user = new User();
-  user.name = req.body.userName;
+  user.name = req.body.name;
   user.email = req.body.email;
   user.password = req.body.password;
   user.picture = user.gravatar();
+  user.haveEvent = req.body.haveEvent
 
 
 User.findOne({ email: req.body.email }, (err, existUser) => {
@@ -89,7 +90,7 @@ router.route('/profile')
     });
   });
 })
-// Update the user data
+// Update the name, email and password
 .post(checkJwt, (req, res, next) => {
   User.findOne({ _id: req.decoded.user._id}, (err, user) => {
     if (err) {
@@ -114,7 +115,7 @@ router.route('/profile')
 
 // * UPDATE ADDRESS * //
 router.route('/address')
-
+// GET user address
 .get(checkJwt, (req, res, next) => {
   User.findOne({ _id: req.decoded.user._id }, (err, user) => {
     res.json({
@@ -124,7 +125,7 @@ router.route('/address')
     });
   });
 })
-
+// UPDATE user address
 .post(checkJwt, (req, res, next) => {
   User.findOne({ _id: req.decoded.user._id}, (err, user) => {
     if (err) {
